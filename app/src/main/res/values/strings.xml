@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BasicClock</string>
+    <string name="action_settings">Settings</string>
+</resources>
