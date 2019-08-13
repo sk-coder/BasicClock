@@ -1,4 +1,4 @@
-package com.karneth.www.basicclock
+package com.karneth.basicclock
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.karneth.www.basicclock", appContext.packageName)
+        assertEquals("com.karneth.basicclock", appContext.packageName)
     }
 }

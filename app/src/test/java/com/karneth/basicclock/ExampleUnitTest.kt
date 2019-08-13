@@ -1,4 +1,4 @@
-package com.karneth.www.basicclock
+package com.karneth.basicclock
 
 import org.junit.Test
 
