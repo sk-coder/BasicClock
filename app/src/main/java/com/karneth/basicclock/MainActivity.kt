@@ -11,14 +11,14 @@ import com.karneth.basicclock.R
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.timerTask
 
 class MainActivity : AppCompatActivity() {
     val TAG = "SK BasicClock"
     private val timer = Timer("clockTimer", true)
-    private val initialTime = 1234
-    private var currentTime = initialTime
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,17 +30,24 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        textBlock.text = currentTime.toString()
+        textBlock.text = getFormattedTime()
 
         timer.scheduleAtFixedRate(timerTask{ onTimer() }, 0.toLong(), 1000.toLong())
     }
 
     fun onTimer() {
-        currentTime++
-        Log.i(TAG, currentTime.toString())
+        val currentTime = getFormattedTime()
+        Log.i(TAG, currentTime)
         this@MainActivity.runOnUiThread(Runnable {
-            this.textBlock.text = currentTime.toString()
+            this.textBlock.text = currentTime
         })
+    }
+
+    fun getFormattedTime () : String {
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("hh:mm:ss")
+        var timeString : String = current.format(formatter)
+        return timeString
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
