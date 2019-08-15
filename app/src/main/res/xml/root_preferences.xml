@@ -1,0 +1,25 @@
+<androidx.preference.PreferenceScreen
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:title="Display Settings"
+        app:key="display_settings">
+
+        <SwitchPreferenceCompat
+            app:key="is24Hour"
+            app:title="Use 24 hour clock format"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            app:title="Help"
+            app:key="help_category">
+
+        <Preference
+            app:key="feedback"
+            app:summary="Report technical issues or suggest new features"
+            app:title="Send feedback"/>
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
