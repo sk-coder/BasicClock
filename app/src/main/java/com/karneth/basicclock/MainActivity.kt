@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.preference.PreferenceManager
 import com.karneth.basicclock.R
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,9 +22,17 @@ class MainActivity : AppCompatActivity() {
     val TAG = "SK BasicClock"
     private val timer = Timer("clockTimer", true)
 
+    var is24Hour = false
+
+    val formatter12Hour = DateTimeFormatter.ofPattern("hh:mm:ss")
+    val formatter24Hour = DateTimeFormatter.ofPattern("HH:mm:ss")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        is24Hour = sharedPreferences.getBoolean("is24Hour", false)
 
         fab.setOnClickListener{
             val intent = Intent(this, SettingsActivity::class.java)
@@ -46,8 +55,13 @@ class MainActivity : AppCompatActivity() {
 
     fun getFormattedTime () : String {
         val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("hh:mm:ss")
-        var timeString : String = current.format(formatter)
+        var timeString : String
+        if (is24Hour) {
+            timeString  = current.format(formatter24Hour)
+        }
+        else {
+            timeString = current.format(formatter12Hour)
+        }
         return timeString
     }
 }
