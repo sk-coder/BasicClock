@@ -1,6 +1,7 @@
 package com.karneth.basicclock
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -27,12 +28,21 @@ class MainActivity : AppCompatActivity() {
     val formatter12Hour = DateTimeFormatter.ofPattern("hh:mm:ss")
     val formatter24Hour = DateTimeFormatter.ofPattern("HH:mm:ss")
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         is24Hour = sharedPreferences.getBoolean("is24Hour", false)
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == "is24Hour") {
+                    Log.i(TAG, "Preference is24Hour updated to: " + sharedPreferences.getBoolean(key, false))
+                    is24Hour = sharedPreferences.getBoolean(key, false)
+                }
+            }
 
         fab.setOnClickListener{
             val intent = Intent(this, SettingsActivity::class.java)
